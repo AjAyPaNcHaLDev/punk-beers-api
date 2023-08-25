@@ -4,155 +4,69 @@ import { useAppDispatch,useAppSelector } from '@/store/hook'
 import { useRouter } from 'next/navigation';
 import BeerCard from './components/BeerCard';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
-  const signIn=useAppSelector(state=>state.user.isSign);
-  
-  const router=useRouter();
- useEffect(()=>{
-  if(!signIn){
-    router.push("/signin")
-  }
- },[])
-
-
-
-  const beer=  {
-  "id": 1,
-  "name": "Buzz",
-  "tagline": "A Real Bitter Experience.",
-  "first_brewed": "09/2007",
-  "description": "A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.",
-  "image_url": "https://images.punkapi.com/v2/keg.png",
-  "abv": 4.5,
-  "ibu": 60,
-  "target_fg": 1010,
-  "target_og": 1044,
-  "ebc": 20,
-  "srm": 10,
-  "ph": 4.4,
-  "attenuation_level": 75,
-  "volume": {
-  "value": 20,
-  "unit": "litres"
-  },
-  "boil_volume": {
-  "value": 25,
-  "unit": "litres"
-  },
-  "method": {
-  "mash_temp": [
-  {
-  "temp": {
-  "value": 64,
-  "unit": "celsius"
-  },
-  "duration": 75
-  }
-  ],
-  "fermentation": {
-  "temp": {
-  "value": 19,
-  "unit": "celsius"
-  }
-  },
-  "twist": null
-  },
-  "ingredients": {
-  "malt": [
-  {
-  "name": "Maris Otter Extra Pale",
-  "amount": {
-  "value": 3.3,
-  "unit": "kilograms"
-  }
-  },
-  {
-  "name": "Caramalt",
-  "amount": {
-  "value": 0.2,
-  "unit": "kilograms"
-  }
-  },
-  {
-  "name": "Munich",
-  "amount": {
-  "value": 0.4,
-  "unit": "kilograms"
-  }
-  }
-  ],
-  "hops": [
-  {
-  "name": "Fuggles",
-  "amount": {
-  "value": 25,
-  "unit": "grams"
-  },
-  "add": "start",
-  "attribute": "bitter"
-  },
-  {
-  "name": "First Gold",
-  "amount": {
-  "value": 25,
-  "unit": "grams"
-  },
-  "add": "start",
-  "attribute": "bitter"
-  },
-  {
-  "name": "Fuggles",
-  "amount": {
-  "value": 37.5,
-  "unit": "grams"
-  },
-  "add": "middle",
-  "attribute": "flavour"
-  },
-  {
-  "name": "First Gold",
-  "amount": {
-  "value": 37.5,
-  "unit": "grams"
-  },
-  "add": "middle",
-  "attribute": "flavour"
-  },
-  {
-  "name": "Cascade",
-  "amount": {
-  "value": 37.5,
-  "unit": "grams"
-  },
-  "add": "end",
-  "attribute": "flavour"
-  }
-  ],
-  "yeast": "Wyeast 1056 - American Ale™"
-  },
-  "food_pairing": [
-  "Spicy chicken tikka masala",
-  "Grilled chicken quesadilla",
-  "Caramel toffee cake"
-  ],
-  "brewers_tips": "The earthy and floral aromas from the hops can be overpowering. Drop a little Cascade in at the end of the boil to lift the profile with a bit of citrus.",
-  "contributed_by": "Sam Mason <samjbmason>"
-  }
-  const fetchData= async()=>{
-  }
+   const user =useAppSelector(state=>state.user)
   return (
-    <main className=" ">
-      <div>
+    <main  className=" h-screen ">
+    
+    <div className="bg-white">
+      <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+        <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
+          <svg
+            viewBox="0 0 1024 1024"
+            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
+            aria-hidden="true"
+          >
+            <circle cx={512} cy={512} r={512} fill="url(#759c1415-0410-454c-8f7c-9a820de03641)" fillOpacity="0.7" />
+            <defs>
+              <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641">
+                <stop stopColor="#7775D6" />
+                <stop offset={1} stopColor="#E935C1" />
+              </radialGradient>
+            </defs>
+          </svg>
+          <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              {user.full_name!=""?"Welcome "+user.full_name:"Welcome to the app"}
+              <br />
+              Start using our app today.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              <b>{user.email!=""?user.email:null}</b>
+            </p>
+            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+              {user.isSign==true?<Link
+                href="/beers"
+                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                See beers 
+              </Link>:<><Link
+                href="/signin"
+                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Sign In 
+              </Link></>}
+              <a href="https://github.com/AjAyPaNcHaLDev/punk-beers-api" className="text-sm font-semibold leading-6 text-white">
+                Source code & developer profile <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+          <div className="relative   h-80  opacity-40 ">
+            <img
+              className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
+              src="https://cdn.dribbble.com/users/2514208/screenshots/9457622/media/30a1e1fa2d62e32d6b3e592518bfa6e5.gif"
+              alt="App screenshot"
 
+              width={1824}
+              height={1080}
+            />
+          </div>
+        </div>
       </div>
-      <div className=' mt-5  flex  flex-row flex-wrap gap-5 justify-center'>  
-      <BeerCard className={"h-min sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"} beer={beer}/> 
-      <BeerCard className={"h-min sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"} beer={beer}/> 
-      <BeerCard className={"h-min sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"} beer={beer}/> 
-      <BeerCard className={"h-min sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"} beer={beer}/> 
-      <BeerCard className={"h-min sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"} beer={beer}/> 
-      </div>
-    </main>
+    </div>
+  </main>
+  
   )
 }

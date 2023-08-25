@@ -1,8 +1,10 @@
 "use client"
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/userSlice";
+import beersSlice from "./features/beersSlice";
 const store=configureStore({reducer:{
-    user:userSlice
+    user:userSlice,
+    beers:beersSlice
 }});
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
